@@ -1,9 +1,9 @@
-import { connect as mongooseConnect } from "./models/database"
-import express from "express";
 import * as dotenv from "dotenv";
-const app = express();
+dotenv.config();
 
-dotenv.config()
+import { connect as mongooseConnect } from "./models/database"
+import express, { Express } from "express";
+const app = express();
 
 app.listen(3000, () => console.log("Server is running!"))
 

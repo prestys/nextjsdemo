@@ -1,7 +1,8 @@
 const UserService = {
     CreateUser: async (userData) => {
         try {
-            const res = await fetch("/api/v1/user/create", {
+            console.log("Hit Service");
+            const res = await fetch("http://localhost:3000/api/v1/user/create", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -9,6 +10,7 @@ const UserService = {
                 body: JSON.stringify(userData)
             });
             const data = await res.json();
+            console.log("Response", data);
             return data;
         } catch (error){
 

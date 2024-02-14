@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "../assets/css/globals.css";
 import '@mantine/core/styles.css';
 import { ColorSchemeScript } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
             <ColorSchemeScript />
         </head>
         <body className={inter.className}>
-            {children}
+            <MantineProvider defaultColorScheme="dark">
+                {children}
+            </MantineProvider>
         </body>
     </html>
   );

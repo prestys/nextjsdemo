@@ -1,6 +1,7 @@
 import { User, IUser } from "../../models/User";
 import { Request, Response } from "express";
 import {comparePasswords, hashPassword} from "../../util/PasswordHelper"
+import jwt from "jsonwebtoken";
 
 const UserController = {
     create: async (req: Request, res: Response): Promise<void> => {
@@ -27,12 +28,14 @@ const UserController = {
         const user: IUser | null = await User.findOne({ email });
 
         if (!user)
-            return res.status(403).send({code: 401, message: "Incorrect username or password"});
+            return res.status(401).send({code: 401, message: "Incorrect username or password"});
 
         if (!await comparePasswords(password, user?.password)) {
-            return res.status(403).json({code: 401, message: "Incorrect username or password"});
+            return res.status(401).json({code: 401, message: "Incorrect username or password"});
         }
 
+        const token = jwt.sign({ email }, process.env.JWT_SUPER_SECRET);
+        res.cookie("jwt", token, { httpOnly: true });
         res.status(200).json({code: 201, message: "Authenticated"})
     }
 };

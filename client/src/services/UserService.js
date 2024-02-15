@@ -1,20 +1,28 @@
 const UserService = {
     CreateUser: async (userData) => {
-        try {
-            console.log("Hit Service");
-            const res = await fetch("http://localhost:3000/api/v1/user/create", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            });
-            const data = await res.json();
-            console.log("Response", data);
-            return data;
-        } catch (error){
+        const res = await fetch("http://localhost:3000/api/v1/user/create", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        const data = await res.json();
+        console.log("Response", data);
+        return data;
+    },
+    UserLogin: async (userData) => {
+        const res = await fetch("http://localhost:3000/api/v1/user/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
 
-        }
+        const data = await res.json();
+        console.log("Response", data);
+        return data;
     }
 };
 

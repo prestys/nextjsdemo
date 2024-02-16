@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import "../../assets/css/login.css";
 import {Card, TextInput, PasswordInput, Button, rem} from "@mantine/core";
 import Link from "next/link";
@@ -8,11 +8,30 @@ import { IconAt, IconLock } from '@tabler/icons-react';
 import {useForm} from "@mantine/form";
 import UserService from "@/services/UserService";
 import { useRouter } from "next/navigation"
+import userService from "@/services/UserService";
 
-const Login = () => {
+const Signup = () => {
     const router = useRouter();
     const emailIcon = <IconAt style={{ width: rem(16), height: rem(16) }} />;
     const passwordIcon = <IconLock style={{ width: rem(16), height: rem(16) }} />;
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                console.log("verify func");
+                const result = await userService.UserVerify();
+                console.log("result", result);
+                if (result) {
+                    router.push("/");
+                }
+            } catch (error) {
+                // Handle errors here
+                console.error('Error verifying authentication:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const form = useForm({
         initialValues: {
@@ -60,4 +79,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;

@@ -2,6 +2,7 @@ import { User, IUser } from "../../models/User";
 import { Request, Response } from "express";
 import {comparePasswords, hashPassword} from "../../util/PasswordHelper"
 import jwt from "jsonwebtoken";
+import isAuthenticated from "../../util/isAuthenticated";
 
 const UserController = {
     create: async (req: Request, res: Response): Promise<void> => {
@@ -34,9 +35,18 @@ const UserController = {
             return res.status(401).json({code: 401, message: "Incorrect username or password"});
         }
 
-        const token = jwt.sign({ email }, process.env.JWT_SUPER_SECRET);
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SUPER_SECRET);
         res.cookie("jwt", token, { httpOnly: true });
         res.status(200).json({code: 201, message: "Authenticated"})
+    },
+    verify: async (req: Request, res: Response) => {
+        try {
+            const userAuthenticated = await isAuthenticated(req.cookies.jwt);
+            res.status(200).json({ userAuthenticated });
+        } catch (error) {
+            console.error("Error during verification:", error);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
     }
 };
 

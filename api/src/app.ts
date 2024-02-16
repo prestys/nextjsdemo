@@ -4,15 +4,12 @@ dotenv.config();
 import { connect as mongooseConnect } from "./models/database";
 import express, {Express, Request, Response} from "express";
 import cors from "cors";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import { router } from "./routes";
-import {verifyToken} from "./middleware/TokenVerifier";
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(verifyToken);
 app.use(cors());
 app.use(router);
 mongooseConnect();
@@ -27,4 +24,4 @@ app.get('/login', (req: Request, res: Response) => {
     res.send('Hello, Express!');
 });
 
-app.listen(3000, () => console.log("Server is running!"));
+app.listen(5000, () => console.log("Server is running!"));

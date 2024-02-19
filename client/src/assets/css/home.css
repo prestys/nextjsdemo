@@ -1,3 +1,9 @@
 .home-page-wrapper {
-    height: 100vh;
+    height: calc(100vh - 112px);
+    display: flex;
+    align-items: center;
+}
+
+.home-page-content {
+    height: 50%;
 }

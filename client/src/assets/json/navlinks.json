@@ -1,0 +1,22 @@
+{
+  "navlinks": [
+    {
+      "title": "Home",
+      "pathname": "/",
+      "icon": "",
+      "inMainNavbar": true
+    },
+    {
+      "title": "Sign Up",
+      "pathname": "/signup",
+      "icon": "",
+      "inMainNavbar": false
+    },
+    {
+      "title": "Log In",
+      "pathname": "/login",
+      "icon": "",
+      "inMainNavbar": false
+    }
+  ]
+}

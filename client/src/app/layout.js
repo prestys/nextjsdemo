@@ -3,6 +3,9 @@ import "../assets/css/globals.css";
 import '@mantine/core/styles.css';
 import { ColorSchemeScript } from '@mantine/core';
 import { createTheme, MantineProvider } from '@mantine/core';
+import Header from "@/assets/components/Header";
+import "bootstrap/dist/css/bootstrap.css"
+import "@fortawesome/react-fontawesome";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +18,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
         <head>
+            <script src="https://kit.fontawesome.com/11a07c492f.js" crossOrigin="anonymous"></script>
             <title>My awesome title</title>
             <ColorSchemeScript />
         </head>
         <body className={inter.className}>
             <MantineProvider defaultColorScheme="dark">
+                <Header></Header>
                 {children}
             </MantineProvider>
         </body>

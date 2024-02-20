@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {comparePasswords, hashPassword} from "../../util/PasswordHelper"
 import jwt from "jsonwebtoken";
 import isAuthenticated from "../../util/isAuthenticated";
+import {verifyToken} from "../../middleware/TokenVerifier";
 
 const UserController = {
     create: async (req: Request, res: Response): Promise<void> => {
@@ -46,6 +47,16 @@ const UserController = {
         } catch (error) {
             console.error("Error during verification:", error);
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    },
+    getUser: async (req: Request, res: Response) => {
+        try {
+            const token = req.cookies.jwt;
+            const decoded: any = jwt.verify(token, process.env.JWT_SUPER_SECRET);
+            const user: IUser | null = await User.findById(decoded.id);
+            res.status(200).json({code: 200, userId: `${user.id}`});
+        } catch (error){
+            res.status(500).json({ error: "Internal Server Error in route" });
         }
     }
 };

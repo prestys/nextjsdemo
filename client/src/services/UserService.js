@@ -33,11 +33,25 @@ const UserService = {
                 }
             });
             const data = await req.json();
-            console.log("req", data);
             const { userAuthenticated } = data;
             return userAuthenticated;
         } catch (error) {
             console.error("Error during verification:", error);
+            throw error;
+        }
+    },
+    GetUser: async () => {
+        try {
+            const req = await fetch("/api/v1/user/get-user", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await req.json();
+            return data;
+        } catch (error){
+            console.log("Error getting user:", error);
             throw error;
         }
     }

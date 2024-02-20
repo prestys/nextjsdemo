@@ -6,8 +6,29 @@ import "../../assets/css/login.css";
 import { Card, TextInput, PasswordInput, Button } from "@mantine/core";
 import Link from "next/link";
 import {useForm} from "@mantine/form";
+import userService from "@/services/UserService";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 const Login = () => {
+    const router = useRouter();
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                console.log("verify func");
+                const result = await userService.UserVerify();
+                console.log("result", result);
+                if (result) {
+                    router.push("/");
+                }
+            } catch (error) {
+                // Handle errors here
+                console.error('Error verifying authentication:', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const form = useForm({
         initialValues: {
